@@ -1,71 +1,82 @@
-import Image from "next/image";
+import {
+  GitHubIcon,
+  LinkedInIcon,
+  MediumIcon,
+  XIcon,
+} from "@/components/icons/brand-icons";
+import { Button } from "@/components/ui/base-button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/base-tooltip";
 
-// TODO: real profile URLs — the Figma frame carries no links.
-const SOCIALS = [
-  {
-    name: "X",
-    metric: "1.5K Followers",
-    href: "#",
-    icon: { src: "/icons/x.svg", width: 24, height: 24 },
-  },
-  {
-    name: "GitHub",
-    metric: "8K Contributions",
-    href: "#",
-    icon: { src: "/icons/github.svg", width: 19, height: 20 },
-  },
-  {
-    name: "LinkedIn",
-    metric: "20K Follower",
-    href: "#",
-    icon: { src: "/icons/linkedin.svg", width: 21, height: 21 },
-  },
+/*
+ * From chanhdai.com (MIT, (c) 2026 Chánh Đại) —
+ * src/features/portfolio/components/social-links.tsx.
+ *
+ * The control is his, as it is: Base UI's Button rendered *as* an anchor
+ * (`nativeButton={false}` + `render`), so it keeps button semantics — a real
+ * role, keyboard press handling, the pressed scale — while still being a link.
+ * Class list, sizing and hover states are his too; see components/ui/button.tsx
+ * for the token remapping and components/ui/tooltip.tsx for the popup.
+ *
+ * Four differences from upstream, all deliberate:
+ *
+ * - His `Panel`/`PanelContent` wrapper is his page chrome (full-bleed
+ *   screen-line borders, a radix Slot). This page has its own section rhythm, so
+ *   the `border-t` hairline and `px-4` — which line the icons up with the hero —
+ *   stay as they were.
+ * - His row has six accounts; this has the four Ahmed has named.
+ * - `addQueryParams(item.href, UTM_PARAMS)` is gone. That is his analytics
+ *   tagging, not ours.
+ * - The tooltip says "GitHub", where his says "GitHub (ncdai)". A platform name
+ *   is what Ahmed asked for, so there is no handle field to leave half-empty.
+ *
+ * TODO: three of the four hrefs are still `#` — the Figma frame carries no
+ * links and Ahmed has only supplied GitHub. Follower counts from the old card
+ * design are gone for good; this row is an icon and a tooltip, nothing else.
+ */
+const SOCIAL_LINKS = [
+  { title: "X", href: "#", Icon: XIcon },
+  { title: "GitHub", href: "https://github.com/ahmedshahid786", Icon: GitHubIcon },
+  { title: "LinkedIn", href: "#", Icon: LinkedInIcon },
+  { title: "Medium", href: "#", Icon: MediumIcon },
 ];
 
 export function Socials() {
   return (
-    <ul className="divide-border border-border grid divide-y border-t sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-      {SOCIALS.map((social) => (
-        <li key={social.name}>
-          <a
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center justify-between gap-4 p-2"
-          >
-            <span className="flex min-w-0 items-center gap-4">
-              <span className="border-border flex size-10 shrink-0 items-center justify-center rounded-lg border">
-                <Image
-                  src={social.icon.src}
-                  alt=""
-                  width={social.icon.width}
-                  height={social.icon.height}
-                  unoptimized
-                />
-              </span>
-              <span className="flex min-w-0 flex-col">
-                <span className="text-secondary group-hover:text-primary truncate transition-colors">
-                  {social.name}
-                </span>
-                <span className="text-muted truncate text-xs">
-                  {social.metric}
-                </span>
-              </span>
-            </span>
+    <section className="border-border border-t px-4 py-4">
+      <h2 className="sr-only">Social links</h2>
 
-            {/* Source vector is a circled left arrow; the design rotates it to
-                point up-right. */}
-            <Image
-              src="/icons/arrow-circle.svg"
-              alt=""
-              width={20}
-              height={20}
-              unoptimized
-              className="shrink-0 rotate-[135deg]"
-            />
-          </a>
-        </li>
-      ))}
-    </ul>
+      <TooltipProvider>
+        <ul className="flex flex-wrap gap-2">
+          {SOCIAL_LINKS.map(({ title, href, Icon }) => (
+            <li key={title}>
+              <Tooltip>
+                <TooltipTrigger
+                  render={
+                    <Button
+                      className="text-secondary shadow-none [&_svg:not([class*='size-'])]:size-4.5"
+                      variant="outline"
+                      size="icon-sm"
+                      nativeButton={false}
+                      render={
+                        <a href={href} target="_blank" rel="noopener">
+                          <Icon />
+                          <span className="sr-only">{title}</span>
+                        </a>
+                      }
+                    />
+                  }
+                />
+                <TooltipContent>{title}</TooltipContent>
+              </Tooltip>
+            </li>
+          ))}
+        </ul>
+      </TooltipProvider>
+    </section>
   );
 }

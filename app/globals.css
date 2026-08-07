@@ -1,4 +1,13 @@
 @import "tailwindcss";
+/* Enter/exit keyframes for the socials tooltip (`animate-in`, `fade-in-0`,
+ * `zoom-in-95`, `slide-in-from-*`). Same import chanhdai.com uses. */
+@import "tw-animate-css";
+/* Utility-only stylesheet from the shadcn package — `no-scrollbar` and the
+ * `scroll-fade-x` edge mask the contribution graph's scroll container asks for.
+ * Same import chanhdai.com uses. Verified to declare no palette tokens (only
+ * keyframes, custom variants and utilities), so it cannot reach the layer
+ * below. */
+@import "shadcn/tailwind.css";
 
 /*
  * Theme tokens.
@@ -13,6 +22,14 @@
   /* Inset frame the design mats media into (project covers, placeholders). */
   --surface: #1f1f1f;
   --border: rgb(255 255 255 / 0.12);
+  /*
+   * Veil for small interactive controls — the socials icon buttons use it at
+   * full strength for the border and at 30% (50% hovered) for the fill, which is
+   * chanhdai.com's `--input` and the same value. It is a separate token from
+   * --border because it changes with the control's state, and from --surface
+   * because it is translucent: it tints whatever is behind it.
+   */
+  --control: rgb(255 255 255 / 0.15);
 
   --primary: #ffffff;
   --secondary: rgb(255 255 255 / 0.8);
@@ -20,12 +37,30 @@
 
   --accent: #0cc54c;
   --accent-subtle: rgb(0 255 98 / 0.1);
+
+  /*
+   * Aliases, not new palette entries. Components installed from shadcn
+   * registries name their colours `foreground` / `muted-foreground`; rather than
+   * rewrite those files, the two names are pointed at what this palette already
+   * says. Nothing here introduces a colour that wasn't already above.
+   *
+   * --muted-foreground is --muted *flattened* onto --background rather than
+   * aliased to it, and that matters: the contribution graph builds its five
+   * intensity steps by stacking opacity on this token
+   * (`fill-muted-foreground/5` … `/80`). Multiplying those steps by --muted's
+   * own 0.6 alpha would compress the whole scale into near-invisibility, so the
+   * token has to be opaque. color-mix keeps it derived, so a light palette
+   * recomputes it instead of needing a second hand-picked grey.
+   */
+  --foreground: var(--primary);
+  --muted-foreground: color-mix(in srgb, var(--primary) 60%, var(--background));
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-border: var(--border);
+  --color-control: var(--control);
 
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
@@ -34,11 +69,45 @@
   --color-accent: var(--accent);
   --color-accent-subtle: var(--accent-subtle);
 
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+
   --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-geist-mono);
   --font-ui: var(--font-inter);
+  /* Registry components reach for `font-sans` (the graph's tooltip does) and
+   * would otherwise land on Tailwind's system stack. <body> sets font-mono
+   * explicitly, so naming --font-sans here does not change the page's own text. */
+  --font-sans: var(--font-inter);
+  /* KAWARA — the monogram and footer wordmark only. */
+  --font-brand: var(--font-kawara);
 
   /* The design uses a 10px label size, below Tailwind's smallest default. */
   --text-2xs: 0.625rem;
   --text-2xs--line-height: 1.4;
+}
+
+/*
+ * Footer wordmark treatment: hollow glyphs with a hairline stroke, fading out
+ * downward. The design composited this in the vector — a black fill under a 1px
+ * outline, with a black gradient over the lower half. As live text it is a
+ * transparent fill plus a stroke plus a mask, so all three are tweakable here.
+ *
+ * The mask gradient carries alpha only; #fff means "keep", transparent means
+ * "hide". It is not a colour, which is why it isn't a token.
+ */
+@utility wordmark {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--primary);
+  mask-image: linear-gradient(to bottom, #fff, transparent 90%);
+}
+
+/*
+ * Written here by `shadcn add @ncdai/github-contributions` — the registry item
+ * ships it as part of the component (chanhdai.com, MIT, (c) 2026 Chánh Đại).
+ * Only the CLI's placeholder `---break---` comment and its indentation were
+ * tidied. It underlines the "GitHub" link in the graph's footer.
+ */
+@utility link-underline {
+  @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
 }
