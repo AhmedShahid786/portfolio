@@ -1,80 +1,31 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 
-type Tech = { name: string; src: string };
-type Work = { name: string; downloads: string; src: string };
+import { EXPERIENCE, type Entry } from "@/src/data/experience";
 
-type Entry = {
-  company: string;
-  logo: string;
-  role: string;
-  meta: string[];
-  stack: Tech[];
-  description?: ReactNode;
-  projects: Work[];
+/*
+ * Prose binding for the entries, kept here rather than in
+ * `src/data/experience.ts` so that data layer stays JSX-free — the same split
+ * as socials, where the icons live in components/social-icons.tsx. Keyed by
+ * `company`: an entry with no paragraph simply has no key here.
+ *
+ * "Surf Ki Duniya" below is spelt "Sarf Ki Dunya" in that file's project tiles.
+ * That inconsistency is in the design and is reproduced as-is; see HANDOFF §6.4.
+ */
+const DESCRIPTIONS: Record<string, ReactNode> = {
+  "Islamic Desk": (
+    <>
+      I worked as a <em className="text-primary not-italic">Software Engineer</em>{" "}
+      at <em className="text-primary not-italic">Islamic Desk</em>, contributing
+      to the development of{" "}
+      <em className="text-primary not-italic">Seerat ki Duniya</em>,{" "}
+      <em className="text-primary not-italic">Nahw Ki Duniya</em>, and{" "}
+      <em className="text-primary not-italic">Surf Ki Duniya</em>. My role
+      involved creating effective solutions and working with the team to
+      introduce new functionalities.
+    </>
+  ),
 };
-
-// Icon-to-label pairings are taken from the Figma frame as-is. Note the second
-// entry labels the Laravel mark "CICD" and the Node mark "Next JS" — that
-// mismatch is in the design, not introduced here.
-const EXPERIENCE: Entry[] = [
-  {
-    company: "Saylani Tech",
-    logo: "/images/companies/saylani-tech.png",
-    role: "Senior Software Engineer",
-    meta: [],
-    stack: [
-      { name: "React", src: "/images/tech/react.png" },
-      { name: "Aws", src: "/images/tech/aws.svg" },
-      { name: "CICD", src: "/images/tech/github-actions.svg" },
-      { name: "Redux", src: "/images/tech/redux.png" },
-      { name: "shadcn Ui", src: "/images/tech/shadcn.svg" },
-    ],
-    // The design draws a chevron here but supplies no expanded content.
-    projects: [],
-  },
-  {
-    company: "Islamic Desk",
-    logo: "/images/companies/islamic-desk.png",
-    role: "Software Engineer",
-    meta: ["Part Time", "2018-2022", "4y"],
-    stack: [
-      { name: "React", src: "/images/tech/react.png" },
-      { name: "Firebase", src: "/images/tech/firebase.svg" },
-      { name: "CICD", src: "/images/tech/laravel.png" },
-      { name: "Next JS", src: "/images/tech/nodejs.png" },
-    ],
-    description: (
-      <>
-        I worked as a <em className="text-primary not-italic">Software Engineer</em>{" "}
-        at <em className="text-primary not-italic">Islamic Desk</em>, contributing
-        to the development of{" "}
-        <em className="text-primary not-italic">Seerat ki Duniya</em>,{" "}
-        <em className="text-primary not-italic">Nahw Ki Duniya</em>, and{" "}
-        <em className="text-primary not-italic">Surf Ki Duniya</em>. My role
-        involved creating effective solutions and working with the team to
-        introduce new functionalities.
-      </>
-    ),
-    projects: [
-      {
-        name: "Seerat Ki Dunya",
-        downloads: "20K+",
-        src: "/images/work/seerat-ki-dunya.png",
-      },
-      {
-        name: "Nahw Ki Dunya",
-        downloads: "50K+",
-        src: "/images/work/nahw-ki-dunya.png",
-      },
-      {
-        name: "Sarf Ki Dunya",
-        downloads: "10k+",
-        src: "/images/work/sarf-ki-dunya.png",
-      },
-    ],
-  },
-];
 
 function EntryHeader({
   entry,
@@ -161,10 +112,12 @@ function EntryHeader({
 }
 
 function EntryBody({ entry }: { entry: Entry }) {
+  const description = DESCRIPTIONS[entry.company];
+
   return (
     <div className="flex flex-col gap-8 pt-4">
-      {entry.description && (
-        <p className="text-secondary leading-snug">{entry.description}</p>
+      {description && (
+        <p className="text-secondary leading-snug">{description}</p>
       )}
 
       {entry.projects.length > 0 && (
@@ -208,7 +161,8 @@ function EntryBody({ entry }: { entry: Entry }) {
 }
 
 function ExperienceEntry({ entry }: { entry: Entry }) {
-  const expandable = Boolean(entry.description) || entry.projects.length > 0;
+  const expandable =
+    Boolean(DESCRIPTIONS[entry.company]) || entry.projects.length > 0;
 
   if (!expandable) {
     return (
@@ -230,7 +184,7 @@ function ExperienceEntry({ entry }: { entry: Entry }) {
 
 export function Experience() {
   return (
-    <section id="experience" className="border-border border-t">
+    <section id="experience" className="screen-line-top screen-line-bottom">
       <h2 className="font-display border-border border-b px-4 py-3 text-3xl font-medium">
         Experience
       </h2>

@@ -111,3 +111,56 @@
 @utility link-underline {
   @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
 }
+
+/*
+ * From chanhdai.com (MIT, (c) 2026 Chánh Đại) — src/styles/globals.css,
+ * lines 114-165. Verbatim apart from the colour token: his palette has a
+ * dedicated `--line`, this one doesn't, so `bg-line` → `bg-border` and
+ * `var(--color-line)` → `var(--border)`. No new token was introduced.
+ *
+ * These draw the page's section rules. The pseudo-element is 200vw wide and
+ * starts at -100vw, so the hairline runs to both screen edges even though the
+ * element owning it stops at the 3xl shell — which is the whole point: every
+ * section can now carry its own full-bleed rule without a full-width wrapper of
+ * its own. `-z-1` keeps it behind the section's content.
+ *
+ * They need an `overflow-x-clip` ancestor or they add a horizontal scrollbar —
+ * `app/page.tsx` has it. It must be `clip`, never `hidden`: `hidden` makes a
+ * scroll container, and the sticky nav would stop sticking to the viewport.
+ */
+@utility screen-line-top {
+  @apply relative;
+  &:before {
+    content: "";
+    @apply absolute top-0 left-[-100vw] -z-1 h-px w-[200vw] bg-border;
+  }
+}
+
+@utility screen-line-bottom {
+  @apply relative;
+  &:after {
+    content: "";
+    @apply absolute bottom-0 left-[-100vw] -z-1 h-px w-[200vw] bg-border;
+  }
+}
+
+@utility screen-line-top-none {
+  @apply before:content-none;
+}
+
+@utility screen-line-bottom-none {
+  @apply after:content-none;
+}
+
+@utility diagonal-stripes {
+  @apply [--pattern-foreground:var(--border)]/56;
+  @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px];
+}
+
+@utility stripe-divider {
+  @apply relative h-8;
+  &:before {
+    content: "";
+    @apply absolute left-[-100vw] -z-1 h-full w-[200vw] diagonal-stripes;
+  }
+}

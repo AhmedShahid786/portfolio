@@ -1,39 +1,7 @@
 import Image from "next/image";
 
 import { NoisePanel } from "@/components/noise-panel";
-
-// TODO: real project URLs — the Figma frame has no links on the buttons.
-const PROJECTS = [
-  {
-    title: "SMIT-LMS",
-    description:
-      "This project focused on improving the usability and structure of a student portal by simplifying complex workflows, clarifying navigation, and creating a scalable interface for both students and administrators.",
-    href: "#",
-    cover: { src: "/images/smit-lms.png", width: 2871, height: 1264 },
-    stack: [
-      { name: "Node.js", src: "/images/tech/nodejs.png" },
-      { name: "React", src: "/images/tech/react.png" },
-      { name: "Laravel", src: "/images/tech/laravel.png" },
-      { name: "Redux", src: "/images/tech/redux.png" },
-    ],
-  },
-  {
-    title: "Saylani Alumni",
-    description:
-      "The platform was designed to help students showcase their skills, connect with industry opportunities, and build professional visibility through a structured and accessible digital experience.",
-    href: "#",
-    cover: { src: "/images/saylani-alumni.png", width: 2871, height: 1264 },
-    stack: [
-      { name: "React", src: "/images/tech/react.png" },
-      { name: "Firebase", src: "/images/tech/firebase.svg" },
-      { name: "GitHub Actions", src: "/images/tech/github-actions.svg" },
-      { name: "shadcn/ui", src: "/images/tech/shadcn.svg" },
-      { name: "AWS", src: "/images/tech/aws.svg" },
-    ],
-  },
-];
-
-type Project = (typeof PROJECTS)[number];
+import { PROJECTS, type Project } from "@/src/data/projects";
 
 function ProjectCard({ project }: { project: Project }) {
   return (
@@ -112,7 +80,7 @@ function ComingSoon() {
 
 export function Projects() {
   return (
-    <section id="projects" className="border-border border-t">
+    <section id="projects" className="screen-line-top screen-line-bottom">
       <h2 className="font-display border-border border-b px-4 py-3 text-3xl font-medium">
         Projects
       </h2>

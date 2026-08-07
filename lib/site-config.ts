@@ -6,9 +6,9 @@
  * on chanhdai.com's `src/config/site.ts` (MIT, (c) 2026 Chánh Đại), reduced to
  * what this repo actually reads.
  *
- * `components/socials.tsx` still has `#` placeholders for its four profile
- * links; GITHUB_PROFILE_URL below is the real one and should be what it uses
- * once the other three arrive.
+ * `src/data/socials.ts` still has `#` placeholders for its four profile links;
+ * GITHUB_PROFILE_URL below is the real one and should be what it uses once the
+ * other three arrive.
  */
 export const GITHUB_USERNAME = "ahmedshahid786";
 

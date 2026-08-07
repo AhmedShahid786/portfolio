@@ -1,35 +1,11 @@
 import Image from "next/image";
 
 import { NoisePanel } from "@/components/noise-panel";
-
-// TODO: real post URLs — the Figma frame has no links.
-const POSTS = [
-  {
-    title: "How I accomplished nothing I wanted to by 14.",
-    tags: ["Life", "Career", "Experience"],
-    excerpt:
-      "Navigating the Treacherous Waters of Adolescence: Tales of Triumph and Tribulation",
-    href: "#",
-  },
-  {
-    title: "You shouldn’t become a designer.",
-    tags: ["Career", "Design", "Life"],
-    excerpt:
-      "Is a Career in Design Right for You? Key Considerations Before You Commit",
-    href: "#",
-  },
-];
-
-const READING = {
-  title: "Steal Like an Artist",
-  author: "By Austin Kleon",
-  blurb:
-    "Steal Like an Artist is a guide to finding your creative voice by embracing influence and remixing ideas from others.",
-};
+import { POSTS, READING } from "@/src/data/blogs";
 
 export function Blogs() {
   return (
-    <section id="blogs" className="border-border border-t">
+    <section id="blogs" className="screen-line-top screen-line-bottom">
       <h2 className="font-display border-border border-b px-4 py-3 text-3xl font-medium">
         Blogs
       </h2>

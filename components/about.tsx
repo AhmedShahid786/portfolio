@@ -1,6 +1,6 @@
 export function About() {
   return (
-    <section id="about" className="border-border border-t">
+    <section id="about" className="screen-line-top screen-line-bottom">
       <h2 className="font-display border-border border-b px-4 py-3 text-3xl font-medium">
         About
       </h2>

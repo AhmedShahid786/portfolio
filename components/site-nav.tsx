@@ -1,12 +1,7 @@
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-
-const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Blogs", href: "#blogs" },
-];
+import { NAV_LINKS } from "@/src/data/site-nav";
 
 export function SiteNav() {
   return (

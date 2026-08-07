@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="flex items-stretch justify-between gap-4 px-4">
+    <section className="screen-line-top screen-line-bottom flex items-stretch justify-between gap-4 px-4">
       <div className="flex flex-col justify-center py-8">
         <p className="text-muted tracking-widest">Hey there, I am</p>
 

@@ -111,15 +111,21 @@ the 753px-ish shell (`mx-auto w-full max-w-3xl border-x border-border`) with the
 seven middle sections, and `<SiteFooter/>`. The nav and footer are outside the
 shell deliberately; see below.
 
-**Layout of the repo.** Flat by design — no `src/`, and `@/*` maps to the root:
+**Layout of the repo.** Flat by design — `@/*` maps to the root, so even the
+one nested folder imports as `@/src/data/...`:
 
 ```
 app/        globals.css, layout.tsx, page.tsx, fonts/kawara.otf
 components/ one file per section, plus theme-toggle.tsx and icons/
+src/data/   one file per section: the content those components render
 hooks/      use-sound, use-click-sound, use-prefers-reduced-motion
 lib/sound/  the sound engine, types, and the click-soft data URI
 public/     icons/, images/ (+ tech/, companies/, work/) — no fonts
 ```
+
+`src/data/` follows chanhdai's data layer (§7) and its one rule — **no JSX** —
+so anything that renders is bound back in `components/` by key: the social icons
+in `social-icons.tsx`, the Islamic Desk paragraph in `experience.tsx`.
 
 `hooks/`, `lib/`, and `components/icons/` all arrived on 2026-08-05 with the
 theme toggle and the socials row; everything in them came from chanhdai (§7).
@@ -131,7 +137,8 @@ theme toggle and the socials row; everything in them came from chanhdai (§7).
    `text-muted`, `font-brand`, `text-2xs` exist as utilities. Fonts and font
    sizes live here too, not just colours.
 3. `@utility` — hand-written utilities for treatments too fiddly to inline.
-   There is currently one, `wordmark` (§6.15). This is the place for anything
+   `wordmark` (§6.15), plus the `screen-line-*` / `stripe-divider` family copied
+   from chanhdai (§7). This is the place for anything
    that is three coupled declarations pretending to be one idea; a component
    should not carry `-webkit-text-stroke` and a mask gradient in its class list.
 
@@ -178,15 +185,28 @@ The nav specifically is three coupled pieces. Change one and check the others:
 Because the nav sits outside the shell, `app/page.tsx` is a fragment: `<SiteNav/>`
 then the `max-w-3xl border-x` shell holding everything else.
 
-**Why not chanhdai's `screen-line-bottom`?** It's the obvious candidate — a
-`left:-100vw; width:200vw` pseudo-element — and it was rejected on purpose. It
-needs an `overflow-x-clip` ancestor or it adds a horizontal scrollbar, and `100vw`
-counts the vertical scrollbar's width, so it overflows by exactly that much.
-Tested at 1185px viewport *with* a scrollbar present: this structural version has
-zero horizontal overflow, where the `vw` version would have had ~15px. If you
-later want every section rule to run full-bleed (chanhdai's whole look), that
-utility becomes worth the clip ancestor — for the two rules here it isn't, and
-the two-element pattern above is what to copy for a third.
+**chanhdai's `screen-line-*` utilities are now in use — as of 2026-08-07.** They
+were rejected earlier, and this is the tipping point that paragraph anticipated:
+once *every* section rule has to run full-bleed, one clip ancestor is cheaper
+than nine full-width wrappers. `screen-line-top` / `screen-line-bottom` are a
+`left:-100vw; width:200vw` pseudo-element, so the section keeps its place in the
+shell while its hairline reaches both screen edges. They are in `globals.css`
+(§7) and every section component carries both.
+
+The price is the ancestor: `app/page.tsx` wraps the shell in
+`max-w-screen overflow-x-clip`, because `100vw` counts the vertical scrollbar and
+would otherwise overflow by exactly that much. **It must be `overflow-x-clip`,
+never `overflow-x-hidden`** — `hidden` makes a scroll container, and the sticky
+nav would then stick to *that* instead of the viewport. Verified after the
+change: `scrollWidth === clientWidth` at 380px (365/365) and 1200px (1185/1185),
+and the nav still reports `top: 0` at `scrollY: 1500`.
+
+**The nav and the footer stayed structural** — they already reach the edges with
+the two-element pattern above, and rebuilding them on the utilities would gain
+nothing. Note the nav's `border-b` and the hero's `screen-line-top` sit on
+adjacent rows, so the rule under the nav is 2px; the same is true between any two
+sections in a group. That is upstream's own look — his `Panel` puts
+`screen-line-top screen-line-bottom` on every section too — not a bug to chase.
 
 **The nav is the only client component.** `theme-toggle.tsx` is `"use client"`
 and pulls in `hooks/` and `lib/sound/`; everything else on the page is server-
@@ -437,6 +457,8 @@ obvious next time someone diffs against upstream.
 | `components/theme-toggle.tsx` | `src/components/theme-toggle.tsx` | local state, no tooltip/hotkey |
 | `components/icons/brand-icons.tsx` | `src/components/icons.tsx` | X/GitHub/LinkedIn verbatim; Medium from `simple-icons` |
 | `components/socials.tsx` | `src/features/portfolio/components/social-links.tsx` | see below |
+| `app/globals.css` — `screen-line-top`, `screen-line-bottom`, `screen-line-top-none`, `screen-line-bottom-none`, `diagonal-stripes`, `stripe-divider` | `src/styles/globals.css` lines 114–165 | verbatim but for the colour token: `bg-line` → `bg-border`, `var(--color-line)` → `var(--border)`. His `screen-dashed-line-*`, in the same run of lines, were skipped — nothing uses them |
+| `components/section-separator.tsx` | the local `Separator` in `src/app/(app)/page.tsx` | class list verbatim but for `border-line` → `border-border`; dropped his `cn`/`className` prop |
 
 **The pattern that made these copies cheap:** take the markup and the assets,
 leave the design system behind. Three of his primitives were *not* copied, and
@@ -449,9 +471,13 @@ their look was inlined instead:
   four classes: `size-8 rounded-lg border border-border` plus an 18px
   (`size-4.5`) icon.
 - `Tooltip` — dropped, see §6.17.
-- `screen-line-top` / `screen-line-bottom` — his full-bleed hairlines. Rejected
-  for the nav in favour of a structural full-width header; the reasoning is in §3
-  and it's worth re-reading before reaching for them elsewhere.
+- `screen-line-top` / `screen-line-bottom` — **no longer an exception. Copied as
+  of 2026-08-07**, once every section needed a full-bleed rule; the utilities are
+  in `globals.css` and the clip-ancestor caveat is in §3. The nav and footer keep
+  their structural full-width wrappers — they already work, so they were left
+  alone. What is still not copied is `Panel` itself: sections here apply the two
+  utilities directly and take their `border-x` from the shell in `page.tsx`
+  rather than each carrying their own.
 
 What came over untouched is the logic and the assets — the sound files, the hooks,
 the icon path data. What got rewritten is every bit of presentation, because this

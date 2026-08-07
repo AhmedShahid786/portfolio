@@ -1,23 +1,10 @@
 import Image from "next/image";
 
-const STACK = [
-  { name: "Laravel", src: "/images/tech/laravel.png" },
-  { name: "Node.js", src: "/images/tech/nodejs.png" },
-  { name: "React", src: "/images/tech/react.png" },
-  { name: "Redux", src: "/images/tech/redux.png" },
-  { name: "MySQL", src: "/images/tech/mysql.png" },
-  { name: "Next.js", src: "/images/tech/nextjs.png" },
-  { name: "TypeScript", src: "/images/tech/typescript.png" },
-  { name: "MongoDB", src: "/images/tech/mongodb.png" },
-  { name: "Tailwind CSS", src: "/images/tech/tailwind.png" },
-  { name: "Three.js", src: "/images/tech/threejs.png" },
-  { name: "Git", src: "/images/tech/git.png" },
-  { name: "JavaScript", src: "/images/tech/javascript.png" },
-];
+import { STACK } from "@/src/data/stack";
 
 export function Stack() {
   return (
-    <section id="stack" className="border-border border-t">
+    <section id="stack" className="screen-line-top screen-line-bottom">
       <h2 className="font-display border-border border-b px-4 py-3 text-3xl font-medium">
         Stack
       </h2>
