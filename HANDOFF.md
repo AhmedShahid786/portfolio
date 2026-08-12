@@ -104,6 +104,18 @@ Trading a few px of exactness for responsiveness is the deal he wants.
 | Footer | `site-footer.tsx` | full-bleed top rule; CTA + Book a Call + wordmark |
 | — | `noise-panel.tsx` | shared noise+60%-black placeholder surface |
 
+**Bottom fade overlay — as of 2026-08-12.** A fixed `pointer-events-none`
+`aria-hidden` div in `app/layout.tsx` fades and 1px-blurs the last 96px of the
+viewport into the background; copied from chanhdai (§7). Three things hold it
+together: the `--fade-bottom-height` token in `globals.css`, the overlay itself
+at layout level (**not** in `page.tsx` — that file's `overflow-x-clip` wrapper is
+a clipping ancestor, which can clip a fixed descendant), and a spacer of the same
+height at the end of `site-footer.tsx` so the wordmark can scroll clear of the
+blur. Drop the spacer and the wordmark's lower edge is permanently under it.
+`pointer-events-none` is equally load-bearing: the overlay sits at `z-50` over the
+"Book a Call" button. It shares `z-50` with the sticky nav, but they pin to
+opposite viewport edges and never overlap.
+
 Supporting files: `app/globals.css` (token layer), `app/layout.tsx` (Space
 Grotesk + Geist Mono + Inter via `next/font/google`, KAWARA via
 `next/font/local`), `app/page.tsx` — a fragment holding three things: `<SiteNav/>`,
@@ -356,7 +368,10 @@ here — they live in `app/fonts/`, see above.
 2. **Every URL is a `#` placeholder** — all four socials (X, GitHub, LinkedIn,
    Medium), both project "View Live Link" buttons, both blog posts, and "Book a
    Call". The Figma frame has no links. Handles are needed too, not just URLs —
-   they're what the social tooltips would show (§6.17).
+   they're what the social tooltips would show (§6.17). **Your email address is
+   outstanding too**: the socials row now has a fifth, mail-icon entry, and it
+   sits at `#` like the others until `EMAIL` in `lib/site-config.ts` is filled in
+   (one line, then the link becomes a real `mailto:`).
 3. **The follower counts are gone from the page.** "1.5K Followers", "8K
    Contributions" and "20K Follower" lived in the old socials cards; chanhdai's
    icon row that replaced them has nowhere to put a number, and Ahmed asked for
@@ -459,6 +474,7 @@ obvious next time someone diffs against upstream.
 | `components/socials.tsx` | `src/features/portfolio/components/social-links.tsx` | see below |
 | `app/globals.css` — `screen-line-top`, `screen-line-bottom`, `screen-line-top-none`, `screen-line-bottom-none`, `diagonal-stripes`, `stripe-divider` | `src/styles/globals.css` lines 114–165 | verbatim but for the colour token: `bg-line` → `bg-border`, `var(--color-line)` → `var(--border)`. His `screen-dashed-line-*`, in the same run of lines, were skipped — nothing uses them |
 | `components/section-separator.tsx` | the local `Separator` in `src/app/(app)/page.tsx` | class list verbatim but for `border-line` → `border-border`; dropped his `cn`/`className` prop |
+| Bottom fade: the overlay in `app/layout.tsx`, `--fade-bottom-height` in `app/globals.css`, and the spacer at the end of `components/site-footer.tsx` | `src/app/(app)/layout.tsx` lines 20–26, `src/styles/globals.css` line 348, `src/components/site-footer.tsx` lines 163–164 | verbatim; `to-background` already resolves against this palette, so no token was added beyond the height. **All three are one unit** — the footer spacer is what lets the wordmark scroll out from under the overlay, and the token is shared so the two heights cannot drift. He puts the overlay in a route-group layout; here it is the root layout, for the clip-ancestor reason in §3 |
 
 **The pattern that made these copies cheap:** take the markup and the assets,
 leave the design system behind. Three of his primitives were *not* copied, and
