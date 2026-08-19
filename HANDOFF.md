@@ -96,7 +96,7 @@ Trading a few px of exactness for responsiveness is the deal he wants.
 | — | `theme-toggle.tsx` | client; moon/sun + click sound, from chanhdai.com |
 | Hero | `hero.tsx` | eyebrow, h1, tagline, availability pill, avatar |
 | Socials | `socials.tsx` | icon row lifted from chanhdai.com — §7 |
-| About | `about.tsx` | heading + 3 bullets with inline links |
+| About | `about.tsx` | heading + bullets; copy in `src/data/about.ts` |
 | Projects | `projects.tsx` | 2 cards + "coming soon" placeholder |
 | Experience | `experience.tsx` | native `<details>` accordion, no client JS |
 | Stack | `stack.tsx` | 12 logos, `gap-px` grid rules |
@@ -359,12 +359,11 @@ here — they live in `app/fonts/`, see above.
 
 **Content — these need you:**
 
-1. **The About copy is not yours.** It credits "Creator of chanhdai.com (1.8k
-   stars), React Wheel Picker (24k+ weekly downloads, ▲Vercel OSS Program), and
-   ZaDark (80k+ downloads, 30k+ users)". Those are Chánh Đại's projects — the
-   designer left template copy in the frame. Implemented verbatim as designed,
-   but shipping it would misattribute someone else's work. **Needs your real
-   bio.**
+1. ~~**The About copy is not yours.**~~ **Done 2026-08-15.** The frame's
+   template copy — which credited Chánh Đại's projects (chanhdai.com, React
+   Wheel Picker, ZaDark) — is gone, replaced by Ahmed's own two bullets. The
+   section is now data-driven from `src/data/about.ts`; edit the copy there, not
+   in the component.
 2. **Every URL is a `#` placeholder** — all four socials (X, GitHub, LinkedIn,
    Medium), both project "View Live Link" buttons, both blog posts, and "Book a
    Call". The Figma frame has no links. Handles are needed too, not just URLs —
@@ -375,8 +374,7 @@ here — they live in `app/fonts/`, see above.
 3. **The follower counts are gone from the page.** "1.5K Followers", "8K
    Contributions" and "20K Follower" lived in the old socials cards; chanhdai's
    icon row that replaced them has nowhere to put a number, and Ahmed asked for
-   that row. If you want the counts back they need a home of their own. "5+
-   years" is still in the About copy — confirm that one is accurate.
+   that row. If you want the counts back they need a home of their own.
 4. **Spelling is inconsistent in the design** and reproduced as-is: the
    Islamic Desk paragraph says "Seerat ki Duniya / Nahw Ki Duniya / Surf Ki
    Duniya" while the project tiles below say "Seerat Ki Dunya / Nahw Ki Dunya /

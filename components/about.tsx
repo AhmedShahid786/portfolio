@@ -1,3 +1,30 @@
+import { Fragment } from "react";
+
+import { ABOUT_BULLETS, type AboutSegment } from "@/src/data/about";
+
+function Segment({ segment }: { segment: AboutSegment }) {
+  if (typeof segment === "string") {
+    return <>{segment}</>;
+  }
+
+  if (segment.kind === "emphasis") {
+    return <em className="text-primary not-italic">{segment.text}</em>;
+  }
+
+  const isExternal = segment.href.startsWith("http");
+
+  return (
+    <a
+      href={segment.href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      className="hover:text-primary underline transition-colors"
+    >
+      {segment.text}
+    </a>
+  );
+}
+
 export function About() {
   return (
     <section id="about" className="screen-line-top screen-line-bottom">
@@ -5,38 +32,16 @@ export function About() {
         About
       </h2>
 
-      {/* Copy is verbatim from the Figma frame. The third bullet credits
-          chanhdai.com, React Wheel Picker and ZaDark — see the note in the
-          handoff: those are another developer's projects. */}
       <ul className="text-secondary list-disc space-y-2 py-6 pe-4 ps-10 leading-snug">
-        <li>
-          Design Engineer with 5+ years of experience, known for pixel-perfect
-          execution and strong attention to small details.
-        </li>
-        <li>
-          Passionate about exploring new technologies and turning ideas into
-          reality through polished, thoughtfully crafted personal projects.
-        </li>
-        <li>
-          Creator of{" "}
-          <a
-            href="https://chanhdai.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-primary underline transition-colors"
-          >
-            chanhdai.com
-          </a>{" "}
-          (1.8k stars),{" "}
-          <a href="#" className="hover:text-primary underline transition-colors">
-            React Wheel Picker
-          </a>{" "}
-          (24k+ weekly downloads, ▲Vercel OSS Program), and{" "}
-          <a href="#" className="hover:text-primary underline transition-colors">
-            ZaDark
-          </a>{" "}
-          (80k+ downloads, 30k+ users) — peak metrics.
-        </li>
+        {ABOUT_BULLETS.map((bullet) => (
+          <li key={bullet.id}>
+            {bullet.content.map((segment, index) => (
+              <Fragment key={index}>
+                <Segment segment={segment} />
+              </Fragment>
+            ))}
+          </li>
+        ))}
       </ul>
     </section>
   );

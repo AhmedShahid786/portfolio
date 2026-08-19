@@ -36,16 +36,16 @@ export default function Home() {
           <About />
           <SectionSeparator />
 
-          <Projects />
+          {/* <Projects />
           <SectionSeparator />
 
           <Experience />
-          <SectionSeparator />
+          <SectionSeparator /> */}
 
           <Stack />
           <SectionSeparator />
 
-          <Blogs />
+          {/* <Blogs /> */}
         </div>
       </div>
 
