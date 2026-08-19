@@ -11,22 +11,7 @@ export function Hero() {
         </h1>
 
         <p className="text-secondary mt-4 max-w-sm leading-snug">
-          I build frontend systems that make products feel clear, fast, and
-          finished.
-        </p>
-
-        <p className="border-accent-subtle mt-6 flex w-fit items-center gap-2 rounded-lg border-2 p-2">
-          <Image
-            src="/icons/status-dot.svg"
-            alt=""
-            width={10}
-            height={10}
-            unoptimized
-            className="size-3 shrink-0"
-          />
-          <span className="text-accent font-ui text-2xs whitespace-nowrap">
-            Open To New Opportunities
-          </span>
+          I build products that scale and stick.
         </p>
       </div>
 

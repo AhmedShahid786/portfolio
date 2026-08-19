@@ -204,7 +204,7 @@ export const STACK = [
       {
         key: "github",
         title: "Github",
-        href: "https://github-scm.com",
+        href: "https://github.com",
         icon: "/icons/github.svg",
       },
       {
@@ -216,7 +216,7 @@ export const STACK = [
       {
         key: "cursor",
         title: "Cursor",
-        href: "https://cursor.ai",
+        href: "https://cursor.com",
         icon: "/icons/cursor.svg",
       },
       {
