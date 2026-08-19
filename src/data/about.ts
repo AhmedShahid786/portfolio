@@ -25,15 +25,25 @@ export type AboutBullet = {
 // placeholder text, which was another developer's bio.
 export const ABOUT_BULLETS = [
   {
-    id: "intro",
+    id: "thinking",
     content: [
-      "Hi, I am Ahmed Raza. A Software Engineer building and shipping products that solve real problems, reach real users, and move from idea to production.",
+      "I am fascinated by computers and love building and breaking things.",
     ],
   },
   {
-    id: "approach",
+    id: "mindset",
+    content: ["A generalist with a perfectionist mindset."],
+  },
+  {
+    id: "intro",
     content: [
-      "Product minded engineer with strong systems thinking and ability to wear multiple hats across backend architecture, frontend engineering, polished product interfaces, infrastructure, and deployment.",
+      "A Product minded engineer building and shipping products that solve real problems, reach real users, and move from idea to production.",
+    ],
+  },
+  {
+    id: "intro",
+    content: [
+      "Love to wear multiple hats across backend architecture, frontend engineering, polished product interfaces, infrastructure, and deployments. You name it!",
     ],
   },
 ] satisfies AboutBullet[];
