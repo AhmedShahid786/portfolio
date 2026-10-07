@@ -3,6 +3,7 @@ import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import OrigamiCursor from "@/components/OrigamiCursor";
+import { AwayTitle } from "@/components/away-title";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -27,7 +28,7 @@ const kawara = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Ahmed Raza — Design Engineer",
+  title: "Ahmed Raza",
   description:
     "I build frontend systems that make products feel clear, fast, and finished.",
 };
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="bg-background text-primary flex min-h-full flex-col font-mono">
         {children}
         <OrigamiCursor />
+        <AwayTitle />
       </body>
     </html>
   );

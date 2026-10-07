@@ -33,6 +33,13 @@ export function About() {
       </h2>
 
       <ul className="text-secondary list-disc space-y-2 py-6 pe-4 ps-10 leading-snug">
+        <p>
+          I’ve always been curious about the mechanics behind things. I like
+          digging into the logic, understanding the structure, and seeing how
+          all the pieces fit together. That curiosity naturally pulled me toward
+          software, systems, and building products. And it still drives how I
+          learn today.
+        </p>
         {ABOUT_BULLETS.map((bullet) => (
           <li key={bullet.id}>
             {bullet.content.map((segment, index) => (

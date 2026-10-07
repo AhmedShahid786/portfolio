@@ -4,7 +4,9 @@ export function SiteFooter() {
   return (
     <footer className="border-border border-t">
       <div className="border-border mx-auto w-full max-w-3xl border-x border-b">
-        <div className="flex flex-col items-center gap-6 px-4 pt-24">
+        <div className="relative isolate flex flex-col items-center gap-6 px-4 pt-28">
+          <div aria-hidden className="dot-grid absolute inset-0 -z-1" />
+
           <h2 className="font-display max-w-md text-center text-3xl font-medium uppercase sm:text-4xl">
             Let’s create something cool together
           </h2>

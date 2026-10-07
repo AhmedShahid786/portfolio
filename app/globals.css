@@ -84,6 +84,13 @@
   @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px];
 }
 
+@utility dot-grid {
+  @apply [--pattern-foreground:var(--muted)]/40;
+  @apply bg-[radial-gradient(circle,var(--pattern-foreground)_1px,transparent_1.5px)] bg-size-[12px_12px] bg-top;
+  /* Brightest at top-centre, dissolving toward the bottom and both sides */
+  mask-image: radial-gradient(ellipse 100% 90% at 50% 0%, #fff, rgb(0 0 0 / 0.5) 45%, transparent 100%);
+}
+
 @utility stripe-divider {
   @apply relative h-8;
   &:before {

@@ -17,10 +17,10 @@ export default function Home() {
         <div className="border-border mx-auto w-full max-w-3xl border-x [--separator-height:--spacing(8)]">
           <Hero />
           <Socials />
-          <GithubActivity />
+          <About />
           <SectionSeparator />
 
-          <About />
+          <GithubActivity />
           <SectionSeparator />
 
           <Stack />
