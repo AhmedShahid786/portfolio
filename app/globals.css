@@ -15,6 +15,11 @@
   --accent: #0cc54c;
   --accent-subtle: rgb(0 255 98 / 0.1);
 
+  --paper: #fafafa;
+  --paper-ink: rgb(0 0 0 / 0.82);
+  --paper-rule: rgb(0 0 0 / 0.08);
+  --paper-ring: #8c8c8c;
+
   --foreground: var(--primary);
   --muted-foreground: color-mix(in srgb, var(--primary) 60%, var(--background));
 }
@@ -32,6 +37,11 @@
   --color-accent: var(--accent);
   --color-accent-subtle: var(--accent-subtle);
 
+  --color-paper: var(--paper);
+  --color-paper-ink: var(--paper-ink);
+  --color-paper-rule: var(--paper-rule);
+  --color-paper-ring: var(--paper-ring);
+
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
 
@@ -40,6 +50,7 @@
   --font-ui: var(--font-inter);
   --font-sans: var(--font-inter);
   --font-brand: var(--font-kawara);
+  --font-hand: var(--font-caveat);
 
   --text-2xs: 0.625rem;
   --text-2xs--line-height: 1.4;

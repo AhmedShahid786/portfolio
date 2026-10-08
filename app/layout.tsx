@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Caveat, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import OrigamiCursor from "@/components/OrigamiCursor";
@@ -20,6 +20,11 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+});
+
 const kawara = localFont({
   src: "./fonts/kawara.otf",
   variable: "--font-kawara",
@@ -37,7 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${geistMono.variable} ${inter.variable} ${kawara.variable} dark h-full scroll-pt-20 antialiased`}
+      className={`${spaceGrotesk.variable} ${geistMono.variable} ${inter.variable} ${kawara.variable} ${caveat.variable} dark h-full scroll-pt-20 antialiased`}
     >
       <body className="bg-background text-primary flex min-h-full flex-col font-mono">
         {children}

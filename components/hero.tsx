@@ -11,7 +11,10 @@ export function Hero() {
       {/* Avatar box (square, so height = 17.5% of width) is pulled up by half to straddle the banner edge */}
       <div className="screen-line-bottom flex justify-center">
         <div className="border-border bg-background relative -mt-[8.75%] w-[17.5%] shrink-0 border-x border-t p-2">
-          <div className="border-border relative aspect-square w-full overflow-hidden rounded-full border">
+          <div
+            data-cursor-wall
+            className="border-border relative aspect-square w-full overflow-hidden rounded-full border"
+          >
             <Image
               src="/images/portrait.png"
               alt="Ahmed Raza"

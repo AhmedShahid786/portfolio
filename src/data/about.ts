@@ -49,17 +49,10 @@ export const ABOUT_BULLETS = [
   },
 ] satisfies AboutBullet[];
 
-const ABOUT_DETAILED = `
+export const ABOUT_DETAILED = `
 I’ve always been curious about the mechanics behind things. I like digging into the logic, understanding the structure, and seeing how all the pieces fit together. That curiosity naturally pulled me toward software, systems, and building products. And it still drives how I learn today.
 
 Since then, I’ve built and shipped products that people actually use — products that have reached hundreds of thousands of users and added real value to their lives, systems that have scaled to massive workloads, and apps that have snuck their way into thousands of phones.
 
 I’m equally obsessed with both sides of the product. The engineer — or maybe the perfectionist — in me cares about architecture, performance, and optimizing that 1.5-second API call down to one second if I know it can be done, because that half-second matters to the system and, eventually, the user. Then there’s the product side of me, which can probably get a little annoying. I notice the unnecessary step, the confusing flow, the weird interaction, or that tiny detail nobody really points out, but somehow makes the whole thing feel slightly off. And once I notice it, I’ll probably fix it even if nobody asked me to.
-
-And beyond all that, a few things probably describe me better than another paragraph could:
-
-- Fascinated by computers and love building and breaking things.
-- A generalist with a perfectionist mindset.
-- A product-minded engineer building and shipping products that solve real problems, reach real users, and move from idea to production.
-- Love wearing multiple hats across backend architecture, frontend engineering, polished product interfaces, infrastructure, and deployments. You name it!
 `;
