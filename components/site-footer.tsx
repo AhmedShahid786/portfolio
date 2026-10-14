@@ -34,6 +34,8 @@ export function SiteFooter() {
           />
         </div>
       </div>
+
+      <div className="h-(--fade-bottom-height)" />
     </footer>
   );
 }

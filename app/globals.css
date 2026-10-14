@@ -22,6 +22,9 @@
 
   --foreground: var(--primary);
   --muted-foreground: color-mix(in srgb, var(--primary) 60%, var(--background));
+
+  /* Layout */
+  --fade-bottom-height: --spacing(24);
 }
 
 @theme inline {
@@ -107,5 +110,29 @@
   &:before {
     content: "";
     @apply absolute left-[-100vw] -z-1 h-full w-[200vw] diagonal-stripes;
+  }
+}
+
+/* Animated <details>: lets block-size transition to/from `auto`. Browsers
+   without ::details-content (Firefox today) just open instantly. */
+@utility accordion {
+  interpolate-size: allow-keywords;
+
+  &::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      block-size 400ms ease,
+      content-visibility 400ms allow-discrete;
+  }
+
+  &[open]::details-content {
+    block-size: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::details-content {
+      transition: none;
+    }
   }
 }

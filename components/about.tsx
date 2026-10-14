@@ -33,7 +33,7 @@ export function About() {
         About
       </h2>
 
-      <ul className="text-secondary list-disc space-y-2 pb-20 pe-4 ps-10 pt-6 sm:pe-20 leading-snug">
+      <ul className="text-secondary list-disc space-y-2 py-6 pe-4 ps-10 sm:pe-20 leading-snug">
         {ABOUT_BULLETS.map((bullet) => (
           <li key={bullet.id}>
             {bullet.content.map((segment, index) => (
