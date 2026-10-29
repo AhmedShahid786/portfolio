@@ -48,6 +48,13 @@ export function CaseStudy({ product }: { product: Product }) {
         </div>
 
         <ProductBanner product={product} as="h1" preload />
+
+        {(product.company || product.period) && (
+          <p className="text-muted flex flex-wrap justify-between gap-x-4 px-4 py-2 text-sm">
+            <span>{product.company}</span>
+            <span>{product.period}</span>
+          </p>
+        )}
       </header>
 
       <CaseStudySection title="The Goal">
@@ -81,11 +88,39 @@ export function CaseStudy({ product }: { product: Product }) {
       </CaseStudySection>
 
       <CaseStudySection title="My Contribution">
-        <Paragraphs items={product.contribution} />
+        {product.contribution.length === 0 && <Paragraphs items={[]} />}
+        {product.contribution.map((part, index) => (
+          <div key={part.title ?? index} className="flex flex-col gap-4">
+            {part.title && (
+              <h3 className="font-display text-lg leading-tight font-medium">
+                {part.title}
+              </h3>
+            )}
+            <Paragraphs items={part.paragraphs} />
+          </div>
+        ))}
       </CaseStudySection>
 
       <CaseStudySection title="Impact">
-        <Paragraphs items={product.impact} />
+        {product.impact.length === 0 ? (
+          <Paragraphs items={[]} />
+        ) : (
+          <ul className="text-secondary flex list-disc flex-col gap-2 pl-4 leading-relaxed marker:text-muted">
+            {product.impact.map((point) => (
+              <li key={point.text}>
+                {point.highlight && (
+                  <strong className="text-primary font-medium">
+                    {point.highlight}
+                  </strong>
+                )}
+                {/* No space when the text continues with punctuation. */}
+                {point.highlight && !/^[,.;:]/.test(point.text) && " "}
+                {point.text}
+              </li>
+            ))}
+          </ul>
+        )}
+        {product.reflection && <Paragraphs items={product.reflection} />}
       </CaseStudySection>
     </article>
   );

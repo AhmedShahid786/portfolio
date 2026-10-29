@@ -1,4 +1,5 @@
 import banner from "@/src/assets/banners/saylani-alumni.jpg";
+import logo from "@/src/assets/logos/saylani-alumni.png";
 
 import type { Product } from "./types";
 
@@ -8,6 +9,7 @@ export const saylaniAlumni = {
   summary:
     "The platform was designed to help students showcase their skills, connect with industry opportunities, and build professional visibility through a structured and accessible digital experience.",
   banner,
+  logo,
   goal: [],
   stack: [
     { name: "React", src: "/images/tech/react.png" },

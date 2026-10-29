@@ -17,6 +17,10 @@ type Velocity = { x: number; y: number };
 // Push a point that ended up inside a wall back out through the side it came from.
 function resolveWalls(prevX: number, prevY: number, x: number, y: number, velocity: Velocity) {
     for (const wall of document.querySelectorAll(WALL_SELECTOR)) {
+        // Skip walls that aren't rendered, e.g. banners inside a collapsed
+        // accordion: they still report the rect they'd have if open, which
+        // lands on whatever sits below (the footer, for the last entry).
+        if (!wall.checkVisibility({ contentVisibilityAuto: true })) continue;
         const rect = wall.getBoundingClientRect();
         const left = rect.left - WALL_PADDING;
         const right = rect.right + WALL_PADDING;

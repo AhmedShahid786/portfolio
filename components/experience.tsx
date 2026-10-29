@@ -21,23 +21,25 @@ function Chevron() {
   );
 }
 
+// Logo with the name beside it. With the banner and Case Study button gone, the
+// row itself links to the case study.
 function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/work/${product.slug}`}
-      className="group/product flex flex-col gap-2 p-4"
+      className="text-secondary hover:text-primary flex items-center gap-2 transition-colors"
     >
-      <Image
-        src={product.banner}
-        alt={`${product.name} banner`}
-        placeholder="blur"
-        // Same as product-banner.tsx: the exported JPEG, not a WebP re-encode.
-        unoptimized
-        className="h-auto w-full"
-      />
-      <span className="font-display group-hover/product:text-primary text-secondary text-lg font-medium transition-colors">
-        {product.name}
+      {/* White 40px tile; the logo sits inside at 60% (24px), scaled to fit
+          since the logos aren't all square. */}
+      <span className="bg-primary flex size-10 shrink-0 items-center justify-center rounded-lg">
+        <Image
+          src={product.logo}
+          alt=""
+          sizes="1.5rem"
+          className="size-6 object-contain"
+        />
       </span>
+      <span className="font-display text-lg font-medium">{product.name}</span>
     </Link>
   );
 }
@@ -69,27 +71,33 @@ function ExperienceEntry({ entry, open }: { entry: Entry; open: boolean }) {
         </span>
       </AccordionSummary>
 
-      <div className="flex flex-col gap-4 pb-4">
+      <div>
         {entry.summary && (
-          <p className="text-secondary px-4 leading-relaxed">{entry.summary}</p>
+          <p className="text-secondary p-4 leading-relaxed">{entry.summary}</p>
         )}
 
         {entry.products.length > 0 && (
-          <div className="flex flex-col gap-2">
-            <h4 className="font-display px-4 text-lg leading-tight font-medium">
+          // No top padding: the summary's p-4 above already spaces it.
+          <div className="flex flex-col gap-4 px-4 pb-4">
+            <h4 className="font-display text-lg leading-tight font-medium">
               Products
             </h4>
 
-            {/* Striped gutters either side, same treatment as the Stack panel. */}
-            <div className="diagonal-stripes">
-              <ul className="border-border bg-background divide-border mx-4 divide-y border-x border-y">
-                {entry.products.map((product) => (
-                  <li key={product.slug}>
-                    <ProductCard product={product} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* All products on one line, wrapping when they run out of room,
+                split by a thin vertical line. */}
+            <ul className="flex flex-wrap gap-y-4">
+              {entry.products.map((product, index) => (
+                <li key={product.slug} className="flex">
+                  {index > 0 && (
+                    <span
+                      aria-hidden
+                      className="bg-border mx-4 w-px self-stretch"
+                    />
+                  )}
+                  <ProductCard product={product} />
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

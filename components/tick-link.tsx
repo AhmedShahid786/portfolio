@@ -16,7 +16,8 @@ export function TickLink({
     <Link
       {...props}
       onPointerDown={(event) => {
-        if (event.button === 0) window.sounds?.tick({ x: event.clientX });
+        // No `x`: panning by click position made left-side links sound quieter.
+        if (event.button === 0) window.sounds?.tick();
         onPointerDown?.(event);
       }}
       onClick={(event) => {

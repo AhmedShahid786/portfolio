@@ -21,7 +21,9 @@ export function SiteFooter() {
 
         <div className="@container grid px-6 pb-4">
           <p className="wordmark font-brand col-start-1 row-start-1 pt-11 text-center text-[17cqw] leading-none whitespace-nowrap uppercase">
-            Ahmed Raza
+            {/* Wall on the text, not the <p>, so pt-11's empty space above
+                the letters doesn't block the cursor crane. */}
+            <span data-cursor-wall>Ahmed Raza</span>
           </p>
 
           <Image

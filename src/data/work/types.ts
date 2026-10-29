@@ -11,11 +11,25 @@ export type Product = {
   // so next/image gets the intrinsic size (no layout shift), a blur
   // placeholder, and a content-hashed URL that can be cached forever.
   banner: StaticImageData;
+  // Static import from `src/assets/logos/<slug>.png`.
+  logo: StaticImageData;
   liveUrl?: string;
-  // Case-study sections. Each is a list of paragraphs; an empty list renders
-  // the heading with a "to be written" note so the page shape stays visible.
+  // Shown under the name on the case study, e.g. "Saylani Welfare
+  // International Trust" · "February 2025 – Present".
+  company?: string;
+  period?: string;
+  // Case-study sections. An empty list renders the heading with a "to be
+  // written" note so the page shape stays visible.
   goal: string[];
   stack: ProductTech[];
-  contribution: string[];
-  impact: string[];
+  contribution: ContributionPart[];
+  impact: ImpactPoint[];
+  // Closing paragraphs after the impact list.
+  reflection?: string[];
 };
+
+// One sub-section of "My Contribution"; untitled when there's only one.
+export type ContributionPart = { title?: string; paragraphs: string[] };
+
+// One impact bullet; `highlight` renders bold before `text`.
+export type ImpactPoint = { highlight?: string; text: string };
