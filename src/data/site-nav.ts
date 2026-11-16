@@ -4,5 +4,5 @@ export type NavLink = { label: string; href: string };
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Work", href: "/work" },
-  { label: "Blogs", href: "/#blogs" },
+  { label: "Blogs", href: "/blog" },
 ] satisfies NavLink[];

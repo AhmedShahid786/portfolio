@@ -1,0 +1,85 @@
+{
+  "slug": "hello-world-a-new-beginning",
+  "title": "Hello World: A New Beginning!",
+  "excerpt": "The screen was empty. Just a blinking cursor waiting for me to type something. I was blank but suddenly two words came to my mind. The same two classic words…",
+  "publishedAt": "2025-09-08",
+  "tags": [
+    "Devops",
+    "Backend Development",
+    "Software Engineering"
+  ],
+  "canonicalUrl": "https://ahmedshahid786.medium.com/hello-world-a-new-beginning-e1845fdeca7c",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "content": [
+        "The screen was empty. Just a blinking cursor waiting for me to type something. I was blank but suddenly two words came to my mind. The same two classic words every programmer starts with: ",
+        {
+          "text": "Hello World!",
+          "bold": true
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "But this time, it’s not code. It’s me, stepping into a new space, sharing my thoughts, experiences, and lessons with the world."
+      ]
+    },
+    {
+      "type": "quote",
+      "lines": [
+        [
+          "Hello,"
+        ],
+        [
+          "Myself ",
+          {
+            "text": "Ahmed Shahid",
+            "bold": true
+          },
+          " !"
+        ]
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "As you’ve eventually reached here reading all the dramatic scene above, I assume that you’re quite a bit interested in what this article holds for you. Okay Okay, I get it, its taking a bit long. So let’s get straight to the point and let me tell you a bit about myself."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "My name is",
+        {
+          "text": " Ahmed Raza",
+          "bold": true
+        },
+        ", an 18 year old who is a Computer Science enthusiast, a book lover and one who loves writing. At this point, when I am writing this, I am working as an assosciate software engineer at a product based company. Probably going to start my University in a couple of months as well. Till now, I have grasped a descent command over full stack development and a bit of devops. Myself Ahmed Shahid."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "But that is not just enough. Everything that I have learnt so far, I see many students struggling to learn/understand the same thing or find related articles, guides and resources. So I thought I should share my knowledge with the people out there and do you what’s the cherry on top? I love writing! I’ll be writing on software development (web and mobile apps), computer science, backend engineering, some hands on tutorials and much more. If anyone of these topics interest you, you’re gonna love it."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Concluding",
+          "bold": true
+        },
+        ", I am stepping in a new chapter of my life, where I am going to share what I have learnt so far and everything I continue learn along the journey of life."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Thanks a lot for staying with me till the end of this article. See you in the next one!"
+      ]
+    }
+  ]
+}

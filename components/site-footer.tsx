@@ -37,7 +37,9 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="h-(--fade-bottom-height)" />
+      {/* Half the bottom fade's height: the box's lower edge sits inside the
+          fade, which reads fine and keeps the page from ending in dead space. */}
+      <div className="h-[calc(var(--fade-bottom-height)/2)]" />
     </footer>
   );
 }

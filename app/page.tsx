@@ -1,4 +1,5 @@
 import { About } from "@/components/about";
+import { Blogs } from "@/components/blogs";
 import { Experience } from "@/components/experience";
 import { GithubActivity } from "@/components/github-activity";
 import { Hero } from "@/components/hero";
@@ -27,6 +28,9 @@ export default function Home() {
           <SectionSeparator />
 
           <Experience />
+          <SectionSeparator />
+
+          <Blogs />
           <SectionSeparator />
         </div>
       </div>
