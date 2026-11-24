@@ -5,11 +5,12 @@ import type { Product } from "./types";
 
 export const sitLms = {
   slug: "sit-lms",
+  liveUrl: "https://www.saylaniit.com/",
   name: "Saylani IT LMS",
   company: "Saylani Welfare International Trust",
   period: "February 2025 – Present",
   summary:
-    "A learning ecosystem built for Saylani IT, connecting over 600K students across web and mobile. Shaped around what it actually feels like to be a student, from the excitement of starting something new to the discipline of showing up, the frustration of getting stuck, and the small wins that make it worthwhile. A place to learn from home, find answers when things don't make sense, build something with classmates, or put months of learning to the test at a hackathon. With mentors to learn from and people to turn to when things get difficult, from the first day to graduation.",
+    "A learning ecosystem built for Saylani IT, connecting over 600K students across web and mobile. Shaped around what it actually feels like to be a student, from the excitement of starting something new to the frustration of getting stuck and the small wins that make it worthwhile. Students can enroll online, learn from home, track their progress, find help when things don't make sense, build with classmates, and put their skills to the test at hackathons, with mentors alongside them from the first day to graduation.",
   banner,
   logo,
   goal: [

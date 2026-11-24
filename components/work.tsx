@@ -1,5 +1,8 @@
+import { Fragment } from "react";
+
 import { CaseStudyButton } from "@/components/case-study-button";
 import { ProductBanner } from "@/components/product-banner";
+import { SectionSeparator } from "@/components/section-separator";
 import { PRODUCTS, type Product } from "@/src/data/work";
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
@@ -22,14 +25,21 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
 export function Work() {
   return (
-    <section className="screen-line-top screen-line-bottom">
+    <section>
       <h1 className="sr-only">Work</h1>
 
-      <ul className="divide-border divide-y">
+      <ul>
         {PRODUCTS.map((product, index) => (
-          <li key={product.slug}>
-            <ProductCard product={product} index={index} />
-          </li>
+          <Fragment key={product.slug}>
+            {index > 0 && (
+              <li aria-hidden="true">
+                <SectionSeparator />
+              </li>
+            )}
+            <li className="screen-line-top screen-line-bottom">
+              <ProductCard product={product} index={index} />
+            </li>
+          </Fragment>
         ))}
       </ul>
     </section>

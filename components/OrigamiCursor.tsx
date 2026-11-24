@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useAnimationFrame, useMotionValue, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
+import { motion, useAnimationFrame, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 // Any element with this attribute is a wall the crane can't fly into.
@@ -97,12 +97,15 @@ function CraneIcon() {
     );
 }
 
+// Only on devices with a real mouse; touch screens and reduced-motion users get none.
+const ENABLED_QUERY = '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
+
 export default function OrigamiCursor() {
-    const [isMobile, setIsMobile] = useState(false);
-    
+    const [enabled, setEnabled] = useState(false);
+
     const mouseX = useMotionValue(-100);
     const mouseY = useMotionValue(-100);
-    
+
     // Hand-rolled spring (instead of useSpring) so walls can stop it mid-flight.
     const cursorX = useMotionValue(-100);
     const cursorY = useMotionValue(-100);
@@ -110,49 +113,29 @@ export default function OrigamiCursor() {
 
     const targetScaleX = useMotionValue(1);
     const scaleX = useSpring(targetScaleX, { damping: 20, stiffness: 150 });
-    
+
     const angle = useMotionValue(0);
 
-    const { scrollYProgress, scrollY } = useScroll();
-    const scrollVelocity = useVelocity(scrollY);
-    const mobileAngle = useMotionValue(0);
-    const mobileY = useTransform(scrollYProgress, [0, 1], ['10vh', '85vh']);
-    const mobileX = useTransform(scrollYProgress, (v) => Math.sin(v * Math.PI * 8) * 15 - 15);
-    
     useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+        const media = window.matchMedia(ENABLED_QUERY);
+        const update = () => setEnabled(media.matches);
+        update();
+        media.addEventListener('change', update);
+        return () => media.removeEventListener('change', update);
+    }, []);
+
+    useEffect(() => {
+        if (!enabled) return;
+        const moveCursor = (e: MouseEvent) => {
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
         };
-        
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        
-        let moveCursor: (e: MouseEvent) => void;
-        if (!isMobile) {
-            moveCursor = (e: MouseEvent) => {
-                mouseX.set(e.clientX);
-                mouseY.set(e.clientY);
-            };
-            window.addEventListener('mousemove', moveCursor);
-        }
-        
-        return () => {
-            if (moveCursor) window.removeEventListener('mousemove', moveCursor);
-            window.removeEventListener('resize', checkMobile);
-        };
-    }, [isMobile, mouseX, mouseY]);
+        window.addEventListener('mousemove', moveCursor);
+        return () => window.removeEventListener('mousemove', moveCursor);
+    }, [enabled, mouseX, mouseY]);
 
     useAnimationFrame((_, delta) => {
-        if (isMobile) {
-            const sv = scrollVelocity.get();
-            if (Math.abs(sv) > 20) {
-                const targetPitch = sv > 0 ? -114 : 66;
-                mobileAngle.set(mobileAngle.get() + (targetPitch - mobileAngle.get()) * 0.1);
-            } else {
-                mobileAngle.set(mobileAngle.get() + (24 - mobileAngle.get()) * 0.05);
-            }
-            return;
-        }
+        if (!enabled) return;
 
         const dt = Math.min(delta, 50) / 1000;
         const prevX = cursorX.get();
@@ -167,41 +150,21 @@ export default function OrigamiCursor() {
         const dx = mouseX.get() - cursorX.get();
         const dy = mouseY.get() - cursorY.get();
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (distance > 5) {
             if (dx > 2) targetScaleX.set(1);
             else if (dx < -2) targetScaleX.set(-1);
 
-            const pitchRad = Math.atan2(dy, Math.abs(dx));
-            const pitchDeg = pitchRad * (180 / Math.PI);
-            
+            const pitchDeg = Math.atan2(dy, Math.abs(dx)) * (180 / Math.PI);
             const targetPitch = pitchDeg + 24;
-            
+
             angle.set(angle.get() + (targetPitch - angle.get()) * 0.15);
         } else {
             angle.set(angle.get() + (0 - angle.get()) * 0.05);
         }
     });
 
-    if (isMobile) {
-        return (
-            <motion.div
-                className="fixed top-0 right-4 z-[9999] pointer-events-none origin-center"
-                style={{ y: mobileY, x: mobileX }}
-            >
-                <motion.div
-                    style={{
-                        rotate: mobileAngle,
-                        scaleX: -1,
-                        x: -24,
-                        y: -24,
-                    }}
-                >
-                    <CraneIcon />
-                </motion.div>
-            </motion.div>
-        );
-    }
+    if (!enabled) return null;
 
     return (
         <motion.div

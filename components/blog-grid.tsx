@@ -36,7 +36,7 @@ export function BlogGrid({ posts }: { posts: Post[] }) {
             )}
 
             <div className="flex flex-col gap-2">
-              <h3 className="font-display text-2xl leading-tight font-medium group-hover:underline group-hover:decoration-dotted group-hover:underline-offset-4">
+              <h3 className="font-display text-base leading-snug font-medium group-hover:underline group-hover:decoration-dotted group-hover:underline-offset-4">
                 {post.title}
               </h3>
               <time dateTime={post.publishedAt} className="text-muted text-sm">
